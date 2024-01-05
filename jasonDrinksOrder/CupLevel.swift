@@ -6,3 +6,8 @@
 //
 
 import Foundation
+
+enum CupLevel: String, CaseIterable {
+    case cupM = "中杯"
+    case cupL = "大杯"
+}

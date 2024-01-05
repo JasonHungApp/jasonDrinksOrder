@@ -1,5 +1,5 @@
 //
-//  MenuClassicBaseTableViewCell.swift
+//  MenuBaseTableViewCell.swift
 //  jasonDrinksOrder
 //
 //  Created by jasonhung on 2024/1/5.
@@ -18,5 +18,4 @@ class MenuBaseTableViewCell: UITableViewCell {
     func setImage(from url: URL) {
         kimageView.kf.setImage(with: url)
     }
-
 }

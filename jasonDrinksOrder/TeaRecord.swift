@@ -7,13 +7,14 @@
 
 import Foundation
 
+//茶品型錄
 struct TeaRecord: Codable {
     let records: [Tea]
 }
 
 struct Tea: Codable {
-    let id: String
-    let createdTime: String
+//    let id: String
+//    let createdTime: String
     let fields: TeaFields
 }
 

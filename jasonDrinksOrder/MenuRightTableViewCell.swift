@@ -1,5 +1,5 @@
 //
-//  menuClassicRightTableViewCell.swift
+//  menuRightTableViewCell.swift
 //  jasonDrinksOrder
 //
 //  Created by jasonhung on 2023/12/31.

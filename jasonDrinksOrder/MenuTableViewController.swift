@@ -1,5 +1,5 @@
 //
-//  menuClassicTableViewController.swift
+//  menuTableViewController.swift
 //  jasonDrinksOrder
 //
 //  Created by jasonhung on 2023/12/31.
@@ -43,7 +43,7 @@ class MenuTableViewController: UITableViewController {
     }
 
     func getMenuClassic() {
-        fetchMenuClassic { result in
+        fetchMenu { result in
             DispatchQueue.main.async {
                 guard let teaRecord = result else {
                     print("Invalid result type")
@@ -63,92 +63,15 @@ class MenuTableViewController: UITableViewController {
         return teaRecord?.records.count ?? 0
     }
 
-//    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//       
-//        // 創建一個UITableViewCell
-//        var cell: UITableViewCell
-//
-//        if indexPath.row % 2 == 1 {
-//            cell = tableView.dequeueReusableCell(withIdentifier: "MenuClassicRightTableViewCell", for: indexPath) as! MenuClassicRightTableViewCell
-//            
-//            if let tea = teaRecord?.records[indexPath.row],
-//               let cell = cell as? MenuClassicRightTableViewCell {
-//                // 設定cell的內容，這裡以name為例
-//                // Ⓗ
-//
-//                cell.knameLabel.text = tea.fields.name
-//                if tea.fields.hotAvailable == "true" {
-//                    cell.knameLabel.text = tea.fields.name + " Ⓗ"
-//                }
-//                cell.priceLabel.text = "中：\(tea.fields.priceM) / 大：\(tea.fields.priceL)"  // 假設 priceM 是 Int
-//                // 其他屬性的設定...
-//                cell.descriptionShortLabel.text = tea.fields.descriptionShort
-//                cell.descriptionLongLabel.text = tea.fields.descriptionLong
-//                
-//                // 如果存在至少一個 image
-//                if let firstImage = tea.fields.image.first {
-//                    // 如果存在至少一個 thumbnail
-//                    let firstThumbnail = firstImage.thumbnails.large
-//                    // 你現在可以訪問 large 的 url 屬性
-//                    let largeURL = firstThumbnail.url
-//                    //print("Large URL:", largeURL)
-//                    
-//                    // 設定圖片
-//                    cell.setImage(from: URL(string: largeURL)!)
-//                }
-//            }
-//            
-//            
-//        } else {
-//            cell = tableView.dequeueReusableCell(withIdentifier: "MenuClassicLeftTableViewCell", for: indexPath) as! MenuClassicLeftTableViewCell
-//            // 從數據源中獲取相應位置的Tea對象
-//            if let tea = teaRecord?.records[indexPath.row], 
-//               let cell = cell as? MenuClassicLeftTableViewCell {
-//                // 設定cell的內容，這裡以name為例
-//                // Ⓗ
-//
-//                cell.knameLabel.text = tea.fields.name
-//                if tea.fields.hotAvailable == "true" {
-//                    cell.knameLabel.text = tea.fields.name + " Ⓗ"
-//                }
-//                cell.priceLabel.text = "中：\(tea.fields.priceM) / 大：\(tea.fields.priceL)"  // 假設 priceM 是 Int
-//                // 其他屬性的設定...
-//                cell.descriptionShortLabel.text = tea.fields.descriptionShort
-//                cell.descriptionLongLabel.text = tea.fields.descriptionLong
-//                
-//                // 如果存在至少一個 image
-//                if let firstImage = tea.fields.image.first {
-//                    // 如果存在至少一個 thumbnail
-//                    let firstThumbnail = firstImage.thumbnails.large
-//                    // 你現在可以訪問 large 的 url 屬性
-//                    let largeURL = firstThumbnail.url
-//                    print("Large URL:", largeURL)
-//                    
-//                    // 設定圖片
-//                    cell.setImage(from: URL(string: largeURL)!)
-//                }
-//            }
-//        }
-//
-//        
-//        
-//        if indexPath.row == (teaRecord?.records.count)! - 1 && indexPath.row > 0 {
-//            // loadingView.backgroundColor = UIColor.white
-//            loadingLabel.text = ""
-//        }
-//
-//        return cell ?? UITableViewCell()
-//    }
-   
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
        
         let cell: UITableViewCell
 
         if indexPath.row % 2 == 1 {
-            cell = tableView.dequeueReusableCell(withIdentifier: "MenuClassicRightTableViewCell", for: indexPath) as! MenuClassicRightTableViewCell
+            cell = tableView.dequeueReusableCell(withIdentifier: "MenuRightTableViewCell", for: indexPath) as! MenuRightTableViewCell
         } else {
-            cell = tableView.dequeueReusableCell(withIdentifier: "MenuClassicLeftTableViewCell", for: indexPath) as! MenuLeftTableViewCell
+            cell = tableView.dequeueReusableCell(withIdentifier: "MenuLeftTableViewCell", for: indexPath) as! MenuLeftTableViewCell
         }
 
         configureCell(at: indexPath, cell: cell)
@@ -167,7 +90,7 @@ class MenuTableViewController: UITableViewController {
             return
         }
 
-        if let rightCell = cell as? MenuClassicRightTableViewCell {
+        if let rightCell = cell as? MenuBaseTableViewCell {
             // 設定cell的內容
             rightCell.knameLabel.text = tea.fields.name
             if tea.fields.hotAvailable == "true" {
@@ -186,29 +109,8 @@ class MenuTableViewController: UITableViewController {
                 // 設定圖片
                 rightCell.setImage(from: URL(string: largeURL)!)
             }
-        } else if let leftCell = cell as? MenuLeftTableViewCell {
-            leftCell.knameLabel.text = tea.fields.name
-            if tea.fields.hotAvailable == "true" {
-                leftCell.knameLabel.text = tea.fields.name + " Ⓗ"
-            }
-            leftCell.priceLabel.text = "中：\(tea.fields.priceM) / 大：\(tea.fields.priceL)"
-            leftCell.descriptionShortLabel.text = tea.fields.descriptionShort
-            leftCell.descriptionLongLabel.text = tea.fields.descriptionLong
-
-            // 如果存在至少一個 image
-            if let firstImage = tea.fields.image.first {
-                let firstThumbnail = firstImage.thumbnails.large
-                let largeURL = firstThumbnail.url
-                print("Large URL:", largeURL)
-                
-                // 設定圖片
-                leftCell.setImage(from: URL(string: largeURL)!)
-            }
         }
     }
-
-    
-    
 
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
